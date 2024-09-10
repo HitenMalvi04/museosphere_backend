@@ -6,6 +6,7 @@ const ticketSchema = new Schema({
   user_id: { type: Number, ref: 'User', default: null }, // Reference to User schema
   name: { type: String, required: true },
   email: { type: String, required: true },
+  ticket_date: {type: Date, required: true},
   phone_number: { type: String, required: true },
   event_id: { type: Number, ref: 'Event', required: true }, // Reference to Event schema
   tickets: [
