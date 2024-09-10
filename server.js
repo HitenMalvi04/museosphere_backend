@@ -11,7 +11,11 @@ const ticketRoutes = require('./routes/ticket');
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: '*', // Or specify the domains allowed
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
+}));
+
 const http = require('http');
 const server = http.createServer(app);
 
