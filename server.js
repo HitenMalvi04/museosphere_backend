@@ -15,6 +15,13 @@ app.use(cors({
     origin: '*', // Or specify the domains allowed
     methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).send({ message: 'Invalid JSON body' });
+  }
+  next();
+});
+
 
 const http = require('http');
 const server = http.createServer(app);
