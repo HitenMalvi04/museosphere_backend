@@ -12,11 +12,12 @@ router.post('/register', async (req, res) => {
   try {
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: 'User already exists' });
-
     user = new User({ name, email, password });
+    console.log("1::::::::::",user);
     await user.save();
-
+    console.log("2::::::::::saved");
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: 3600 });
+    console.log("3::::::::::",token);
     res.json({ token, user: { id: user.id, name: user.name, email: user.email } });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
@@ -42,7 +43,7 @@ router.post('/login', async (req, res) => {
 // Get User
 router.get('/', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    const user = await User.find();
     res.json(user);
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
