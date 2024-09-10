@@ -5,7 +5,7 @@ const Event = require('../models/Event');
 
 router.post('/book', async (req, res) => {
     try {
-        const { user_id, name, email, phone_number, event_id, tickets, total_price, payment_status } = req.body;
+        const { user_id, name,ticket_date ,email, phone_number, event_id, tickets, total_price, payment_status } = req.body;
 
         // Validate required fields
         if (!name || !email || !phone_number || !event_id || !tickets || !total_price) {
@@ -23,6 +23,7 @@ router.post('/book', async (req, res) => {
             user_id: user_id || null, // Can be null for guests
             name,
             email,
+            ticket_date,
             phone_number,
             event_id,
             tickets, // Array of ticket types (Adult, Child, etc.)
