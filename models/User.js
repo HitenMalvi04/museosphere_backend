@@ -5,7 +5,8 @@ const userSchema = new mongoose.Schema({
   user_id: { type: Number, required: true, unique: true }, // Auto-incremented user_id
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  is_member: { type: Boolean, required: true,default: false}
 });
 
 // Auto-increment user_id before saving
@@ -17,6 +18,7 @@ userSchema.pre('validate', async function (next) {
       const latestUser = await mongoose.model('User').findOne().sort({ user_id: -1 });
       this.user_id = latestUser ? latestUser.user_id + 1 : 2205; // Start user_id from 2201
       console.log("this.user_id:::::::", this.user_id);
+
     }
     next();
   } catch (error) {
