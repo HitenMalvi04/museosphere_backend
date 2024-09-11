@@ -8,23 +8,28 @@ const stripe = require('stripe')('sk_test_51PxdpLRtyulDddhmMmxGztP6Uq7F0AVdgEaZd
 router.post('/book', async (req, res) => {
     try {
         const { user_id, name,ticket_date ,email, phone_number, event_id, tickets, total_price, payment_status } = req.body;
-       
+       console.log("came book::::::::::");
         // Validate required fields
         if (!name || !email || !phone_number || !tickets || !total_price) {
+          console.log("came if::::::::::");
             return res.status(400).json({ success: false, message: 'All fields are required' });
+
         }
 
         
         // Check if the event exists
+
         let event = null;
         if (event_id) {
             event = await Event.findOne({ event_id: Number(event_id)});
             if (!event) {
+              console.log("came return if::::::::::");
                 return res.status(404).json({ success: false, message: 'Event not found' });
             }
         }
       
         // Create new ticket booking entry
+        console.log("came new::::::::::");
         const newTicket = new Ticket({
             user_id: user_id || null, // Can be null for guests
             name,
@@ -38,9 +43,10 @@ router.post('/book', async (req, res) => {
             ticket_status: 'active'
         });
         
-
+        console.log("came presave::::::::::");
         // Save the ticket to the database
         const savedTicket = await newTicket.save();
+        console.log("came postsave::::::::::");
  
         // Respond with success and ticket details
         res.status(201).json({
