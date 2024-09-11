@@ -8,7 +8,7 @@ const ticketSchema = new Schema({
   email: { type: String, required: true },
   ticket_date: {type: Date, required: true},
   phone_number: { type: String, required: true },
-  event_id: { type: Number, ref: 'Event', required: true }, // Reference to Event schema
+  event_id: { type: Number, ref: 'Event', default: null }, // Reference to Event schema
   tickets: [
     {
       ticket_type: { type: String, required: true },
@@ -29,6 +29,7 @@ ticketSchema.pre('validate', async function (next) {
     this.ticket_id = latestTicket ? latestTicket.ticket_id + 1 : 106; // Default starting value is 106
   }
   next();
+
 });
 
 

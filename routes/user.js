@@ -12,7 +12,7 @@ router.post('/register', async (req, res) => {
   try {
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: 'User already exists' });
-    user = new User({ name, email, password });
+    user = new User({ name, email, password, is_member: false });
     console.log("1::::::::::",user);
     await user.save();
     console.log("2::::::::::saved");
@@ -34,7 +34,7 @@ router.post('/login', async (req, res) => {
     if (!isMatch)  return res.status(400).json({ message: 'Invalid credentials' });
 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: 3600 });
-    res.json({ token, user: { id: user.id, name: user.name, email: user.email } });
+    res.json({ token, user: { id: user.id, name: user.name, email: user.email , is_member : user.is_member } });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }
