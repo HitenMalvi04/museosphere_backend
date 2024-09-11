@@ -34,7 +34,7 @@ router.post('/book', async (req, res) => {
             event_id : event_id || null,
             tickets, // Array of ticket types (Adult, Child, etc.)
             total_price,
-            payment_status: payment_status || 'pending', // Default to 'pending'
+            payment_status: payment_status || 'done', // Default to 'pending'
             ticket_status: 'active'
         });
         
